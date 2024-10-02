@@ -1,6 +1,6 @@
 body {
     font-family: Arial, sans-serif;
-    background-color: #f0fdf5; /* Verde claro */
+    background-color: #f0fdf5;
     color: #333;
     margin: 0;
     padding: 20px;
@@ -41,17 +41,17 @@ textarea, input[type="number"] {
     margin-bottom: 20px;
     border: 1px solid #ccc;
     border-radius: 5px;
-    font-size: 16px;
+    font-size: 14px;
 }
 
 button {
     background-color: #48bb78;
     color: white;
-    padding: 10px 20px;
+    padding: 10px 15px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    font-size: 16px;
+    font-size: 14px;
     margin-right: 10px;
 }
 
@@ -60,37 +60,28 @@ button:hover {
 }
 
 #tabelaVisualizacao {
-    margin-top: 30px;
+    margin-top: 20px;
 }
 
 table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
+    font-size: 12px; /* Compacta a tabela */
 }
 
 th, td {
     border: 1px solid #ccc;
-    padding: 10px;
+    padding: 5px;
     text-align: left;
-    font-size: 14px;
 }
 
 th {
-    background-color: #e6fffa; /* Fundo claro para o cabeçalho */
+    background-color: #e6fffa;
     color: #2c7a7b;
-}
-
-input[type="number"].nota {
-    width: 60px; /* Largura fixa para campos de nota */
-    padding: 5px;
 }
 
 .total {
     font-weight: bold;
     color: #2c7a7b;
-}
-
-#salvarExcel {
-    margin-top: 20px;
 }
