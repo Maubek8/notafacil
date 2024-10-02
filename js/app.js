@@ -1,56 +1,33 @@
-function criarTabela() {
-    let alunosRAs = document.getElementById('alunosRAs').value.split('\n');
-    let numProvas = document.getElementById('numProvas').value;
-    let tabela = document.getElementById('tabelaAlunos');
-    tabela.innerHTML = ''; // Limpar tabela anterior
+document.addEventListener("DOMContentLoaded", function() {
+    const alunosInput = document.getElementById("alunosRAs");
+    const numProvasInput = document.getElementById("numProvas");
+    const tabelaVisualizacao = document.getElementById("tabelaVisualizacao");
+    const tabelaAlunos = document.getElementById("tabelaAlunos");
 
-    let header = tabela.createTHead();
-    let row = header.insertRow(0);
-    row.insertCell(0).innerHTML = "<b>Nome</b>";
-    row.insertCell(1).innerHTML = "<b>RA</b>";
+    document.getElementById("criarTabela").addEventListener("click", function() {
+        const numProvas = numProvasInput.value;
+        const alunosRAs = alunosInput.value.split("\n").map(linha => {
+            let parts = linha.split(',');
+            return { nome: parts[0].trim(), ra: parts[1].trim() };
+        });
 
-    for (let i = 1; i <= numProvas; i++) {
-        let nomeProva = prompt(`Digite o nome da prova ${i}:`);
-        row.insertCell(i + 1).innerHTML = `<b>${nomeProva}</b>`;
-    }
-    row.insertCell(numProvas + 2).innerHTML = "<b>Nota Final</b>";
-
-    alunosRAs.forEach((aluno, index) => {
-        let [ra, nome] = aluno.split(' - ');
-        let row = tabela.insertRow(index + 1);
-        row.insertCell(0).innerHTML = nome.trim();
-        row.insertCell(1).innerHTML = ra.trim();
-        
-        for (let j = 0; j < numProvas; j++) {
-            let cell = row.insertCell(j + 2);
-            let input = document.createElement('input');
-            input.type = 'number';
-            input.min = '0';
-            input.max = '10';
-            input.oninput = calcularTotal;
-            cell.appendChild(input);
+        tabelaAlunos.innerHTML = '<tr><th>Nome</th><th>RA</th>';
+        for (let i = 0; i < numProvas; i++) {
+            tabelaAlunos.innerHTML += `<th>Prova ${i + 1}</th>`;
         }
-        
-        let totalCell = row.insertCell(numProvas + 2);
-        totalCell.innerHTML = '0';
+        tabelaAlunos.innerHTML += '<th>Nota Final</th></tr>';
+
+        alunosRAs.forEach(aluno => {
+            let row = `<tr><td>${aluno.nome}</td><td>${aluno.ra}</td>`;
+            for (let i = 0; i < numProvas; i++) {
+                row += '<td><input type="number" min="0" max="10" value="0"></td>';
+            }
+            row += '<td class="total">0</td></tr>';
+            tabelaAlunos.innerHTML += row;
+        });
+
+        tabelaVisualizacao.style.display = 'block';
     });
 
-    document.getElementById('tabelaSessao').style.display = 'block';
-}
-
-function calcularTotal() {
-    let row = this.parentNode.parentNode;
-    let total = 0;
-    for (let i = 2; i < row.cells.length - 1; i++) {
-        total += parseFloat(row.cells[i].childNodes[0].value) || 0;
-    }
-    row.cells[row.cells.length - 1].innerHTML = total.toFixed(2);
-}
-
-function salvarExcel() {
-    alert("Funcionalidade 'Salvar em Excel' ainda não implementada.");
-}
-
-function visualizarTabela() {
-    alert("Funcionalidade 'Visualizar Tabela' ainda não implementada.");
-}
+    // Implementação das outras funcionalidades conforme necessário
+});
