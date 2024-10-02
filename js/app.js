@@ -33,7 +33,11 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 
     document.getElementById("gerarTabelaCompleta").addEventListener("click", function() {
-        const alunosRAs = alunosInput.value.split("\n").map(linha => linha.split(","));
+        const alunosRAs = alunosInput.value.split("\n").map(linha => {
+            // Ajusta a formatação dos alunos e RAs removendo espaços e hifens extras
+            const [ra, ...nome] = linha.split(" - ");
+            return [ra.trim(), nome.join(" ").trim()];
+        });
         const colunas = colunasInputDiv.querySelectorAll("input");
 
         tabelaAlunos.innerHTML = ''; // Limpar tabela anterior
@@ -54,7 +58,7 @@ document.addEventListener("DOMContentLoaded", function() {
         });
 
         const totalHeader = document.createElement("th");
-        totalHeader.textContent = "Total";
+        totalHeader.textContent = "Nota Final";
         headerRow.appendChild(totalHeader);
 
         tabelaAlunos.appendChild(headerRow);
@@ -64,11 +68,11 @@ document.addEventListener("DOMContentLoaded", function() {
             const row = document.createElement("tr");
 
             const nomeCell = document.createElement("td");
-            nomeCell.textContent = aluno[0];
+            nomeCell.textContent = aluno[1];
             row.appendChild(nomeCell);
 
             const raCell = document.createElement("td");
-            raCell.textContent = aluno[1];
+            raCell.textContent = aluno[0];
             row.appendChild(raCell);
 
             colunas.forEach(() => {
