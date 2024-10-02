@@ -1,15 +1,15 @@
 window.onload = function() {
-    // Carregar a tabela salva (simulação de dados)
+    // Carregar a tabela salva do sessionStorage
     const tabela = sessionStorage.getItem('tabelaNotas');
     if (tabela) {
-        document.getElementById('tabelaAlunos').innerHTML = tabela;
+        document.getElementById('tabelaAlunos').innerHTML = tabela; // Exibe a tabela salva
     } else {
         document.getElementById('tabelaAlunos').innerHTML = '<tr><td>Nenhuma tabela encontrada.</td></tr>';
     }
 
     // Botão para voltar à edição
     document.getElementById('editarTabela').addEventListener('click', function() {
-        window.location.href = 'index.html'; // Site de edição
+        window.location.href = 'index.html'; // Redirecionar para a página de edição
     });
 
     // Botão para imprimir apenas a tabela
@@ -25,8 +25,8 @@ window.onload = function() {
         printWindow.print();
     });
 
-    // Botão para novo documento
+    // Botão para novo documento (voltar ao site inicial)
     document.getElementById('novoDocumento').addEventListener('click', function() {
-        window.location.href = 'index.html'; // Redirecionar ao site inicial
+        window.location.href = 'index.html'; // Redireciona para o site inicial
     });
 };
