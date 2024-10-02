@@ -7,9 +7,11 @@ window.onload = function() {
         document.getElementById('tabelaAlunos').innerHTML = '<tr><td>Nenhuma tabela encontrada.</td></tr>';
     }
 
-    // Botão para voltar à edição
-    document.getElementById('editarTabela').addEventListener('click', function() {
-        window.location.href = 'index.html'; // Redirecionar para a página de edição
+    // Botão para salvar a tabela editada
+    document.getElementById('salvarTabela').addEventListener('click', function() {
+        const tabelaHtml = document.getElementById('tabelaAlunos').outerHTML;
+        sessionStorage.setItem('tabelaNotas', tabelaHtml); // Salva a tabela editada no sessionStorage
+        alert("Tabela salva com sucesso!"); // Mensagem de confirmação
     });
 
     // Botão para imprimir apenas a tabela
@@ -26,7 +28,4 @@ window.onload = function() {
     });
 
     // Botão para novo documento (voltar ao site inicial)
-    document.getElementById('novoDocumento').addEventListener('click', function() {
-        window.location.href = 'index.html'; // Redireciona para o site inicial
-    });
-};
+    document.getElementById('novoDocumento').addEvent
