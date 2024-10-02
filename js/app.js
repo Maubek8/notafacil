@@ -13,8 +13,8 @@ document.addEventListener("DOMContentLoaded", function() {
         }
 
         const alunosRAs = alunosInput.value.split("\n").filter(line => line.trim() !== "").map(linha => {
-            let parts = linha.split(',');
-            return { nome: parts[0].trim(), ra: parts[1] ? parts[1].trim() : 'N/A' };
+            let parts = linha.trim().split(',');
+            return { nome: parts[0].trim(), ra: (parts[1] || '').trim() };
         });
 
         if (alunosRAs.length === 0) {
@@ -31,7 +31,7 @@ document.addEventListener("DOMContentLoaded", function() {
         alunosRAs.forEach(aluno => {
             let row = `<tr><td>${aluno.nome}</td><td>${aluno.ra}</td>`;
             for (let i = 0; i < numProvas; i++) {
-                row += `<td><input type="number" class="nota" min="0" max="10" value="0" onchange="updateTotal(this)"></td>`;
+                row += `<td><input type="number" class="nota" min="0" max="10" value="0" oninput="updateTotal(this.parentElement.parentElement)"></td>`;
             }
             row += '<td class="total">0</td></tr>';
             tabelaAlunos.innerHTML += row;
@@ -41,8 +41,7 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 });
 
-function updateTotal(element) {
-    const row = element.closest("tr");
+function updateTotal(row) {
     const totalCell = row.querySelector(".total");
     let total = 0;
     row.querySelectorAll(".nota").forEach(nota => {
