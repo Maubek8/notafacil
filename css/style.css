@@ -1,6 +1,6 @@
 body {
     font-family: Arial, sans-serif;
-    background-color: #f0fdf4;
+    background-color: #f0fdf5; /* Verde claro */
     color: #333;
     margin: 0;
     padding: 20px;
@@ -17,6 +17,37 @@ body {
 
 header h1 {
     color: #2c7a7b;
+    text-align: center;
+}
+
+form {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+input, textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+button {
+    background-color: #48bb78;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #38a169;
 }
 
 table {
@@ -29,23 +60,10 @@ th, td {
     border: 1px solid #ccc;
     padding: 8px;
     text-align: left;
+    font-size: 14px; /* Menor fonte */
 }
 
-input[type='number'], textarea {
-    width: 100%;
-    padding: 8px;
-    margin-top: 5px;
-}
-
-button {
-    background-color: #4CAF50;
-    color: white;
-    padding: 10px 15px;
-    margin: 10px 0;
-    border: none;
-    cursor: pointer;
-}
-
-button:hover {
-    background-color: #45a049;
+input[type='number'] {
+    width: auto;
+    padding: 5px;
 }
