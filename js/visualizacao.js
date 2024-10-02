@@ -28,4 +28,7 @@ window.onload = function() {
     });
 
     // Botão para novo documento (voltar ao site inicial)
-    document.getElementById('novoDocumento').addEvent
+    document.getElementById('novoDocumento').addEventListener('click', function() {
+        window.location.href = 'index.html'; // Redireciona para o site inicial
+    });
+};
