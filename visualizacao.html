@@ -7,9 +7,24 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <h1>Visualização de Notas</h1>
-    <div id="tabelaDiv"></div>
-    <button onclick="window.print()">Imprimir</button>
+    <header>
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+            <h1>Visualização de Tabela</h1>
+            <button id="novoDocumento" style="padding: 10px 20px; background-color: #48bb78; color: white; border: none; border-radius: 5px; cursor: pointer;">Novo Documento</button>
+        </div>
+    </header>
+
+    <section>
+        <div id="tabelaVisualizacao">
+            <table id="tabelaAlunos"></table>
+        </div>
+
+        <div style="margin-top: 20px;">
+            <button id="editarTabela" style="padding: 10px 20px; background-color: #48bb78; color: white; border: none; border-radius: 5px; cursor: pointer;">Editar</button>
+            <button id="imprimirTabela" style="padding: 10px 20px; background-color: #48bb78; color: white; border: none; border-radius: 5px; cursor: pointer;">Imprimir</button>
+        </div>
+    </section>
+
     <script src="js/visualizacao.js"></script>
 </body>
 </html>
