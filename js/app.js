@@ -1,82 +1,115 @@
 document.addEventListener("DOMContentLoaded", function() {
-    const alunosInputDiv = document.getElementById("alunosInput");
-    const colunasInputDiv = document.getElementById("colunasInput");
-    const resultadoFinalDiv = document.getElementById("resultadoFinal");
+    const alunosInput = document.getElementById("alunosRAs");
+    const numProvasInput = document.getElementById("numProvas");
+    const colunasInputDiv = document.getElementById("colunas");
+    const colunasInputSection = document.getElementById("colunasInput");
+    const tabelaVisualizacao = document.getElementById("tabelaVisualizacao");
+    const tabelaAlunos = document.getElementById("tabelaAlunos");
 
-    document.getElementById("addAlunos").addEventListener("click", function() {
-        const numAlunos = document.getElementById("numAlunos").value;
-        alunosInputDiv.innerHTML = '';
-
-        for (let i = 1; i <= numAlunos; i++) {
-            const label = document.createElement("label");
-            label.textContent = `Nome do Aluno ${i}:`;
-
-            const input = document.createElement("input");
-            input.type = "text";
-            input.name = `aluno${i}`;
-            input.required = true;
-
-            const raLabel = document.createElement("label");
-            raLabel.textContent = `RA do Aluno ${i}:`;
-
-            const raInput = document.createElement("input");
-            raInput.type = "text";
-            raInput.name = `ra${i}`;
-            raInput.required = true;
-
-            alunosInputDiv.appendChild(label);
-            alunosInputDiv.appendChild(input);
-            alunosInputDiv.appendChild(raLabel);
-            alunosInputDiv.appendChild(raInput);
-            alunosInputDiv.appendChild(document.createElement("br"));
+    document.getElementById("criarTabela").addEventListener("click", function() {
+        const numProvas = numProvasInput.value;
+        if (!alunosInput.value || numProvas < 1) {
+            alert("Preencha os dados corretamente!");
+            return;
         }
-    });
 
-    document.getElementById("addColunas").addEventListener("click", function() {
-        const numColunas = document.getElementById("numColunas").value;
+        // Limpa as colunas anteriores
         colunasInputDiv.innerHTML = '';
 
-        for (let i = 1; i <= numColunas; i++) {
+        for (let i = 1; i <= numProvas; i++) {
             const label = document.createElement("label");
             label.textContent = `Nome da Prova ${i}:`;
-
             const input = document.createElement("input");
             input.type = "text";
-            input.name = `prova${i}`;
+            input.name = `coluna${i}`;
             input.required = true;
 
             colunasInputDiv.appendChild(label);
             colunasInputDiv.appendChild(input);
             colunasInputDiv.appendChild(document.createElement("br"));
         }
+
+        colunasInputSection.style.display = "block";
     });
 
-    document.getElementById("calcularNotaFinal").addEventListener("click", function() {
-        const numAlunos = document.getElementById("numAlunos").value;
-        const numColunas = document.getElementById("numColunas").value;
-        let resultadoHTML = '<h3>Notas Finais</h3>';
+    document.getElementById("gerarTabelaCompleta").addEventListener("click", function() {
+        const alunosRAs = alunosInput.value.split("\n").map(linha => linha.split(","));
+        const colunas = colunasInputDiv.querySelectorAll("input");
 
-        for (let i = 1; i <= numAlunos; i++) {
-            let totalNota = 0;
+        tabelaAlunos.innerHTML = ''; // Limpar tabela anterior
 
-            for (let j = 1; j <= numColunas; j++) {
-                const notaInput = document.querySelector(`input[name="prova${j}"]`);
-                if (notaInput) {
-                    totalNota += parseFloat(notaInput.value);
-                }
-            }
+        // Cabeçalho da Tabela
+        const headerRow = document.createElement("tr");
+        const nomeHeader = document.createElement("th");
+        nomeHeader.textContent = "Nome";
+        const raHeader = document.createElement("th");
+        raHeader.textContent = "RA";
+        headerRow.appendChild(nomeHeader);
+        headerRow.appendChild(raHeader);
 
-            const media = totalNota / numColunas;
-            resultadoHTML += `<p>Aluno ${i}: Média Final = ${media.toFixed(2)}</p>`;
-        }
+        colunas.forEach(coluna => {
+            const colHeader = document.createElement("th");
+            colHeader.textContent = coluna.value;
+            headerRow.appendChild(colHeader);
+        });
 
-        resultadoFinalDiv.innerHTML = resultadoHTML;
+        const totalHeader = document.createElement("th");
+        totalHeader.textContent = "Total";
+        headerRow.appendChild(totalHeader);
+
+        tabelaAlunos.appendChild(headerRow);
+
+        // Corpo da Tabela
+        alunosRAs.forEach(aluno => {
+            const row = document.createElement("tr");
+
+            const nomeCell = document.createElement("td");
+            nomeCell.textContent = aluno[0];
+            row.appendChild(nomeCell);
+
+            const raCell = document.createElement("td");
+            raCell.textContent = aluno[1];
+            row.appendChild(raCell);
+
+            colunas.forEach(() => {
+                const notaCell = document.createElement("td");
+                const notaInput = document.createElement("input");
+                notaInput.type = "number";
+                notaInput.min = "0";
+                notaInput.max = "10";
+                notaInput.addEventListener("input", calcularTotal);
+
+                notaCell.appendChild(notaInput);
+                row.appendChild(notaCell);
+            });
+
+            const totalCell = document.createElement("td");
+            totalCell.classList.add("total");
+            totalCell.textContent = "0";
+            row.appendChild(totalCell);
+
+            tabelaAlunos.appendChild(row);
+        });
+
+        tabelaVisualizacao.style.display = "block";
     });
 
-    document.getElementById("salvarPdf").addEventListener("click", function() {
-        const { jsPDF } = window.jspdf;
-        const pdf = new jsPDF();
-        pdf.text(resultadoFinalDiv.textContent, 10, 10);
-        pdf.save("notas-finais.pdf");
+    function calcularTotal() {
+        const row = this.closest("tr");
+        let total = 0;
+
+        row.querySelectorAll("input").forEach(input => {
+            total += parseFloat(input.value) || 0;
+        });
+
+        row.querySelector(".total").textContent = total.toFixed(2);
+    }
+
+    document.getElementById("salvarExcel").addEventListener("click", function() {
+        // Lógica para salvar a tabela em Excel
+    });
+
+    document.getElementById("imprimirTabela").addEventListener("click", function() {
+        window.print();
     });
 });
