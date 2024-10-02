@@ -13,6 +13,7 @@
         </header>
 
         <section>
+            <h2>Inserir Alunos e RAs</h2>
             <form id="dadosForm">
                 <label for="alunosRAs">Insira os Alunos e seus RAs (um por linha, formato: Nome, RA):</label>
                 <textarea id="alunosRAs" rows="5" placeholder="Exemplo:\nJoão Silva, 12345\nMaria Souza, 67890"></textarea>
@@ -23,7 +24,9 @@
                 <button type="button" id="criarTabela">Criar Tabela</button>
             </form>
 
+            <!-- Exibir a Tabela Aqui -->
             <div id="tabelaVisualizacao" style="display:none;">
+                <h2>Tabela de Alunos e Notas</h2>
                 <table id="tabelaAlunos"></table>
                 <button type="button" id="salvarExcel">Salvar em Excel</button>
                 <button type="button" id="visualizarExcel">Visualizar Tabela</button>
