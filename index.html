@@ -13,12 +13,12 @@
         </header>
 
         <section>
-            <h2>Inserir Alunos e RAs</h2>
+            <h2>Inserir Alunos e Provas</h2>
             <form id="dadosForm">
-                <label for="alunosRAs">Insira os Alunos e seus RAs (um por linha, formato: Nome, RA):</label>
-                <textarea id="alunosRAs" rows="5" placeholder="Exemplo:\nJoão Silva, 12345\nMaria Souza, 67890"></textarea>
+                <label for="alunosRAs">Insira os Alunos (um por linha):</label>
+                <textarea id="alunosRAs" rows="5" placeholder="Exemplo:\nJoão Silva\nMaria Souza"></textarea>
                 
-                <label for="numProvas">Número de Provas (colunas adicionais):</label>
+                <label for="numProvas">Número de Provas:</label>
                 <input type="number" id="numProvas" min="1" required>
                 
                 <button type="button" id="criarTabela">Criar Tabela</button>
@@ -28,8 +28,7 @@
             <div id="tabelaVisualizacao" style="display:none;">
                 <h2>Tabela de Alunos e Notas</h2>
                 <table id="tabelaAlunos"></table>
-                <button type="button" id="salvarExcel">Salvar em Excel</button>
-                <button type="button" id="visualizarExcel">Visualizar Tabela</button>
+                <button type="button" id="salvarExcel">Salvar e Visualizar</button>
             </div>
         </section>
 
