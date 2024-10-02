@@ -2,7 +2,6 @@ document.addEventListener("DOMContentLoaded", function() {
     const criarTabelaBtn = document.getElementById("criarTabela");
     criarTabelaBtn.addEventListener("click", criarTabela);
 
-    // Função para criar a tabela de alunos e provas
     function criarTabela() {
         const alunosInput = document.getElementById("alunosRAs");
         const numProvasInput = document.getElementById("numProvas");
@@ -18,7 +17,6 @@ document.addEventListener("DOMContentLoaded", function() {
             return;
         }
 
-        // Processa os alunos e elimina linhas vazias ou com dados incompletos
         const alunos = alunosInput.value.split("\n").map(linha => linha.trim()).filter(linha => linha !== "");
 
         if (alunos.length === 0) {
@@ -26,7 +24,7 @@ document.addEventListener("DOMContentLoaded", function() {
             return;
         }
 
-        // Cabeçalho da tabela - Editável
+        // Cabeçalho da tabela
         let cabecalho = '<tr><th>Nome</th>';
         for (let i = 0; i < numProvas; i++) {
             cabecalho += `<th contenteditable="true">Prova ${i + 1}</th>`;
@@ -47,7 +45,6 @@ document.addEventListener("DOMContentLoaded", function() {
         tabelaVisualizacao.style.display = 'block';
     }
 
-    // Função para atualizar o total de notas
     function updateTotal(row) {
         const totalCell = row.querySelector(".total");
         let total = 0;
@@ -57,7 +54,7 @@ document.addEventListener("DOMContentLoaded", function() {
         totalCell.textContent = total.toFixed(2);
     }
 
-    // Função para salvar e redirecionar para a página de visualização
+    // Função para salvar a tabela no sessionStorage e redirecionar para a visualização
     document.getElementById("salvarExcel").addEventListener("click", function() {
         const tabelaHtml = document.getElementById("tabelaAlunos").outerHTML;
         sessionStorage.setItem('tabelaNotas', tabelaHtml); // Salva a tabela no sessionStorage
