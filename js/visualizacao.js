@@ -3,6 +3,7 @@ window.onload = function() {
     const tabela = sessionStorage.getItem('tabelaNotas');
     if (tabela) {
         document.getElementById('tabelaAlunos').innerHTML = tabela; // Exibe a tabela salva
+        addInputListeners(); // Adiciona ouvintes aos campos de nota para recalcular os totais
     } else {
         document.getElementById('tabelaAlunos').innerHTML = '<tr><td>Nenhuma tabela encontrada.</td></tr>';
     }
@@ -19,7 +20,7 @@ window.onload = function() {
         const tabela = document.getElementById('tabelaVisualizacao').innerHTML;
         const printWindow = window.open('', '', 'width=800,height=600');
         printWindow.document.write('<html><head><title>Imprimir Tabela</title>');
-        printWindow.document.write('<style>table {width: 100%; border-collapse: collapse;} th, td {border: 1px solid #ccc; padding: 10px; text-align: left;}</style>');
+        printWindow.document.write('<style>table {width: 100%; border-collapse: collapse;} th, td {border: 1px solid #ccc; padding: 5px; font-size: 12px; text-align: left;}</style>');
         printWindow.document.write('</head><body>');
         printWindow.document.write(tabela);
         printWindow.document.write('</body></html>');
@@ -32,3 +33,23 @@ window.onload = function() {
         window.location.href = 'index.html'; // Redireciona para o site inicial
     });
 };
+
+// Adiciona listeners para recalcular os totais ao alterar as notas
+function addInputListeners() {
+    const inputs = document.querySelectorAll('.nota');
+    inputs.forEach(input => {
+        input.addEventListener('input', function() {
+            updateTotal(this.parentElement.parentElement); // Atualiza o total da linha correspondente
+        });
+    });
+}
+
+// Recalcula o total de cada linha
+function updateTotal(row) {
+    const totalCell = row.querySelector(".total");
+    let total = 0;
+    row.querySelectorAll(".nota").forEach(nota => {
+        total += parseFloat(nota.value) || 0;
+    });
+    totalCell.textContent = total.toFixed(2); // Mostra o total com duas casas decimais
+}
