@@ -1,62 +1,96 @@
-document.addEventListener("DOMContentLoaded", function() {
-    const criarTabelaBtn = document.getElementById("criarTabela");
-    criarTabelaBtn.addEventListener("click", criarTabela);
-});
-
-function criarTabela() {
-    const alunosInput = document.getElementById("alunosRAs");
-    const numProvasInput = document.getElementById("numProvas");
-    const tabelaVisualizacao = document.getElementById("tabelaVisualizacao");
-    const tabelaAlunos = document.getElementById("tabelaAlunos");
-
-    // Limpa a tabela anterior
-    tabelaAlunos.innerHTML = '';
-
-    const numProvas = parseInt(numProvasInput.value, 10);
-    if (isNaN(numProvas) || numProvas < 1) {
-        alert("Insira um número válido de provas.");
-        return;
-    }
-
-    // Processa os alunos e elimina linhas vazias ou com dados incompletos
-    const alunosRAs = alunosInput.value.split("\n").map(linha => linha.trim()).filter(linha => linha.includes(' - '));
-
-    if (alunosRAs.length === 0) {
-        alert("Insira ao menos um aluno com RA e Nome no formato correto.");
-        return;
-    }
-
-    // Cabeçalho da tabela
-    let cabecalho = '<tr><th>Nome</th><th>RA</th>';
-    for (let i = 0; i < numProvas; i++) {
-        cabecalho += `<th>Prova ${i + 1}</th>`;
-    }
-    cabecalho += '<th>Nota Final</th></tr>';
-    tabelaAlunos.innerHTML = cabecalho;
-
-    // Linhas da tabela
-    alunosRAs.forEach(linha => {
-        const [ra, nome] = linha.split(' - ').map(part => part.trim());
-
-        // Verifica se o RA e o Nome estão preenchidos corretamente
-        if (ra && nome) {
-            let linhaTabela = `<tr><td>${nome}</td><td>${ra}</td>`;
-            for (let i = 0; i < numProvas; i++) {
-                linhaTabela += `<td><input type="number" class="nota" min="0" max="10" value="0" oninput="updateTotal(this.parentElement.parentElement)"></td>`;
-            }
-            linhaTabela += '<td class="total">0</td></tr>';
-            tabelaAlunos.innerHTML += linhaTabela;
-        }
-    });
-
-    tabelaVisualizacao.style.display = 'block';
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0fdf5; /* Verde claro */
+    color: #333;
+    margin: 0;
+    padding: 20px;
 }
 
-function updateTotal(row) {
-    const totalCell = row.querySelector(".total");
-    let total = 0;
-    row.querySelectorAll(".nota").forEach(nota => {
-        total += parseFloat(nota.value) || 0;
-    });
-    totalCell.textContent = total.toFixed(2);
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+header {
+    text-align: center;
+}
+
+header h1 {
+    color: #2c7a7b;
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+form {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+textarea, input[type="number"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+button {
+    background-color: #48bb78;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-right: 10px;
+}
+
+button:hover {
+    background-color: #38a169;
+}
+
+#tabelaVisualizacao {
+    margin-top: 30px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th, td {
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: left;
+    font-size: 14px;
+}
+
+th {
+    background-color: #e6fffa; /* Fundo claro para o cabeçalho */
+    color: #2c7a7b;
+}
+
+input[type="number"].nota {
+    width: 60px; /* Largura fixa para campos de nota */
+    padding: 5px;
+}
+
+.total {
+    font-weight: bold;
+    color: #2c7a7b;
+}
+
+#salvarExcel {
+    margin-top: 20px;
 }
