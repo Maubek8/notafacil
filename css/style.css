@@ -15,9 +15,14 @@ body {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
+header {
+    text-align: center;
+}
+
 header h1 {
     color: #2c7a7b;
-    text-align: center;
+    font-size: 24px;
+    margin-bottom: 20px;
 }
 
 form {
@@ -26,15 +31,17 @@ form {
 
 label {
     display: block;
-    margin-bottom: 5px;
+    margin-bottom: 10px;
+    font-weight: bold;
 }
 
-input, textarea {
+textarea, input[type="number"] {
     width: 100%;
     padding: 10px;
-    margin-bottom: 10px;
-    border-radius: 5px;
+    margin-bottom: 20px;
     border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
 }
 
 button {
@@ -44,10 +51,16 @@ button {
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    font-size: 16px;
+    margin-right: 10px;
 }
 
 button:hover {
     background-color: #38a169;
+}
+
+#tabelaVisualizacao {
+    margin-top: 30px;
 }
 
 table {
@@ -58,12 +71,26 @@ table {
 
 th, td {
     border: 1px solid #ccc;
-    padding: 8px;
+    padding: 10px;
     text-align: left;
-    font-size: 14px; /* Menor fonte */
+    font-size: 14px; /* Ajuste da fonte para a tabela */
 }
 
-input[type='number'] {
-    width: auto;
+th {
+    background-color: #e6fffa; /* Fundo claro para o cabeçalho */
+    color: #2c7a7b;
+}
+
+input[type="number"].nota {
+    width: 60px; /* Largura fixa para campos de nota */
     padding: 5px;
+}
+
+.total {
+    font-weight: bold;
+    color: #2c7a7b;
+}
+
+#salvarExcel, #visualizarExcel {
+    margin-top: 20px;
 }
