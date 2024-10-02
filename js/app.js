@@ -8,8 +8,7 @@ document.addEventListener("DOMContentLoaded", function() {
         const tabelaVisualizacao = document.getElementById("tabelaVisualizacao");
         const tabelaAlunos = document.getElementById("tabelaAlunos");
 
-        // Limpa a tabela anterior
-        tabelaAlunos.innerHTML = '';
+        tabelaAlunos.innerHTML = ''; // Limpa a tabela anterior
 
         const numProvas = parseInt(numProvasInput.value, 10);
         if (isNaN(numProvas) || numProvas < 1) {
