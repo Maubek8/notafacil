@@ -1,6 +1,11 @@
 document.addEventListener("DOMContentLoaded", function() {
     const criarTabelaBtn = document.getElementById("criarTabela");
+    const salvarTabelaBtn = document.getElementById("salvarTabela");
+    const imprimirTabelaBtn = document.getElementById("imprimirTabela");
+
     criarTabelaBtn.addEventListener("click", criarTabela);
+    salvarTabelaBtn.addEventListener("click", salvarTabela);
+    imprimirTabelaBtn.addEventListener("click", imprimirTabela);
 
     function criarTabela() {
         const alunosInput = document.getElementById("alunosRAs");
@@ -64,8 +69,15 @@ document.addEventListener("DOMContentLoaded", function() {
         row.querySelector('.total').textContent = total.toFixed(2);
     }
 
+    // Função para salvar a tabela no localStorage
+    function salvarTabela() {
+        const tabelaHtml = document.getElementById("tabelaAlunos").outerHTML;
+        localStorage.setItem('tabelaSalva', tabelaHtml);
+        alert("Tabela salva com sucesso!");
+    }
+
     // Função para imprimir a tabela
-    document.getElementById("imprimirTabela").addEventListener("click", function() {
+    function imprimirTabela() {
         const tabela = document.getElementById("tabelaVisualizacao").innerHTML;
         const printWindow = window.open('', '', 'width=800,height=600');
         printWindow.document.write('<html><head><title>Imprimir Tabela</title>');
@@ -75,5 +87,5 @@ document.addEventListener("DOMContentLoaded", function() {
         printWindow.document.write('</body></html>');
         printWindow.document.close();
         printWindow.print();
-    });
+    }
 });
