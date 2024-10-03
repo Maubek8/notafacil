@@ -3,7 +3,10 @@ document.addEventListener("DOMContentLoaded", function() {
     const imprimirTabelaBtn = document.getElementById("imprimirTabela");
 
     criarTabelaBtn.addEventListener("click", criarTabela);
-    imprimirTabelaBtn.addEventListener("click", imprimirTabela);
+    imprimirTabelaBtn.addEventListener("click", function() {
+        salvarTabela();  // Salva a tabela com os dados atuais
+        imprimirTabela();  // Depois imprime a tabela
+    });
 
     function criarTabela() {
         const alunosInput = document.getElementById("alunosRAs");
@@ -65,6 +68,13 @@ document.addEventListener("DOMContentLoaded", function() {
             total += parseFloat(nota.value) || 0;
         });
         row.querySelector('.total').textContent = total.toFixed(2);
+    }
+
+    // Função para salvar a tabela no localStorage
+    function salvarTabela() {
+        const tabelaHtml = document.getElementById("tabelaAlunos").outerHTML;
+        localStorage.setItem('tabelaSalva', tabelaHtml);
+        alert("Tabela salva com sucesso!");
     }
 
     // Função para imprimir a tabela
