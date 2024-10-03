@@ -85,15 +85,15 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     }
 
-    // Função para imprimir a tabela
+    // Função para imprimir a tabela sem duplicar botões
     function imprimirTabela() {
         const tabelaHtml = document.getElementById("tabelaVisualizacao").innerHTML;
         const printWindow = window.open('', '', 'width=800,height=600');
         printWindow.document.write('<html><head><title>Imprimir Tabela</title>');
-        printWindow.document.write('<style>table {width: 100%; border-collapse: collapse;} th, td {border: 1px solid #ccc; padding: 5px; font-size: 12px; text-align: left;}</style>');
+        printWindow.document.write('<style>table {width: 100%; border-collapse: collapse;} th, td {border: 1px solid #ccc; padding: 5px; font-size: 12px; text-align: left;} button {margin-top: 20px; padding: 10px;}</style>');
         printWindow.document.write('</head><body>');
         printWindow.document.write(tabelaHtml);
-        printWindow.document.write('<button onclick="window.print()">Imprimir</button>');  // Botão de impressão
+        printWindow.document.write('<button onclick="window.print()">Imprimir</button>');  // Apenas um botão de impressão
         printWindow.document.write('</body></html>');
         printWindow.document.close();
     }
