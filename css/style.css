@@ -1,6 +1,6 @@
 body {
     font-family: Arial, sans-serif;
-    background-color: #f0fdf5;
+    background-color: #f0fdf5; /* Verde claro */
     color: #333;
     margin: 0;
     padding: 20px;
@@ -17,7 +17,6 @@ body {
 
 header {
     text-align: center;
-    position: relative;
 }
 
 header h1 {
@@ -26,43 +25,33 @@ header h1 {
     margin-bottom: 20px;
 }
 
-.logo {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    width: 80px;
-    height: auto;
-}
-
-.powered-by {
-    position: absolute;
-    top: 100px;
-    right: 10px;
-    font-size: 12px;
-    color: #888;
-}
-
 form {
     margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: bold;
 }
 
 textarea, input[type="number"] {
     width: 100%;
     padding: 10px;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
     border: 1px solid #ccc;
     border-radius: 5px;
-    font-size: 14px;
+    font-size: 16px;
 }
 
 button {
     background-color: #48bb78;
     color: white;
-    padding: 10px 15px;
+    padding: 10px 20px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    font-size: 14px;
+    font-size: 16px;
     margin-right: 10px;
 }
 
@@ -71,27 +60,30 @@ button:hover {
 }
 
 #tabelaVisualizacao {
-    margin-top: 20px;
+    margin-top: 30px;
 }
 
 table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
-    font-size: 14px;
-    table-layout: fixed; /* Fixado para ajustar o layout */
 }
 
 th, td {
     border: 1px solid #ccc;
-    padding: 5px; /* Reduzido para diminuir o espaço */
+    padding: 10px;
     text-align: left;
-    line-height: 1.2; /* Ajustado para menos espaçamento entre linhas */
+    font-size: 14px;
 }
 
 th {
-    background-color: #e6fffa;
+    background-color: #e6fffa; /* Fundo claro para o cabeçalho */
     color: #2c7a7b;
+}
+
+input[type="number"].nota {
+    width: 60px; /* Largura fixa para campos de nota */
+    padding: 5px;
 }
 
 .total {
@@ -99,10 +91,6 @@ th {
     color: #2c7a7b;
 }
 
-input.nota {
-    width: 100%;
-    box-sizing: border-box; /* Certifica-se de que os inputs preencham corretamente as células */
-    padding: 5px;
-    font-size: 13px;
-    text-align: center; /* Centraliza o texto dos inputs */
+#salvarExcel {
+    margin-top: 20px;
 }
