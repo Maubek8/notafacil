@@ -5,11 +5,10 @@ document.addEventListener("DOMContentLoaded", function() {
     function criarTabela() {
         const alunosInput = document.getElementById("alunosRAs");
         const numProvasInput = document.getElementById("numProvas");
-        const tabelaVisualizacao = document.getElementById("tabelaVisualizacao");
         const tabelaAlunos = document.getElementById("tabelaAlunos");
+        const tabelaVisualizacao = document.getElementById("tabelaVisualizacao");
 
-        tabelaAlunos.innerHTML = ''; // Limpa a tabela anterior
-
+        tabelaAlunos.innerHTML = '';
         const numProvas = parseInt(numProvasInput.value, 10);
         if (isNaN(numProvas) || numProvas < 1) {
             alert("Insira um número válido de provas.");
@@ -23,54 +22,35 @@ document.addEventListener("DOMContentLoaded", function() {
             return;
         }
 
-        // Cabeçalho da tabela
         let cabecalho = '<tr><th>Nome</th>';
         for (let i = 0; i < numProvas; i++) {
-            cabecalho += `<th contenteditable="true">Prova ${i + 1}</th>`;
+            cabecalho += `<th>Prova ${i + 1}</th>`;
         }
         cabecalho += '<th>Total</th></tr>';
         tabelaAlunos.innerHTML = cabecalho;
 
-        // Linhas da tabela
         alunos.forEach(nome => {
             let linhaTabela = `<tr><td>${nome}</td>`;
             for (let i = 0; i < numProvas; i++) {
-                linhaTabela += `<td><input type="number" class="nota" min="0" max="10" value="0" oninput="updateTotal(this.parentElement.parentElement)"></td>`;
+                linhaTabela += `<td><input type="number" class="nota" min="0" max="10" value="0"></td>`;
             }
             linhaTabela += '<td class="total">0</td></tr>';
             tabelaAlunos.innerHTML += linhaTabela;
         });
 
         tabelaVisualizacao.style.display = 'block';
-    }
 
-    // Função para atualizar o total de cada linha
-    function updateTotal(row) {
-        const totalCell = row.querySelector(".total");
-        let total = 0;
-        row.querySelectorAll(".nota").forEach(nota => {
-            total += parseFloat(nota.value) || 0;
+        document.querySelectorAll('.nota').forEach(input => {
+            input.addEventListener('input', function() {
+                const row = this.parentNode.parentNode;
+                const notas = row.querySelectorAll('.nota');
+                const totalCell = row.querySelector('.total');
+                let total = 0;
+                notas.forEach(nota => {
+                    total += parseFloat(nota.value) || 0;
+                });
+                totalCell.textContent = total.toFixed(2);
+            });
         });
-        totalCell.textContent = total.toFixed(2); // Atualiza o valor total com duas casas decimais
     }
-
-    // Função para salvar a tabela
-    document.getElementById("salvarTabela").addEventListener("click", function() {
-        const tabelaHtml = document.getElementById("tabelaAlunos").outerHTML;
-        localStorage.setItem('tabelaNotas', tabelaHtml); // Salva no localStorage
-        alert("Tabela salva com sucesso!");
-    });
-
-    // Função para imprimir a tabela
-    document.getElementById("imprimirTabela").addEventListener("click", function() {
-        const tabela = document.getElementById("tabelaVisualizacao").innerHTML;
-        const printWindow = window.open('', '', 'width=800,height=600');
-        printWindow.document.write('<html><head><title>Imprimir Tabela</title>');
-        printWindow.document.write('<style>table {width: 100%; border-collapse: collapse;} th, td {border: 1px solid #ccc; padding: 5px; font-size: 12px; text-align: left;}</style>');
-        printWindow.document.write('</head><body>');
-        printWindow.document.write(tabela);
-        printWindow.document.write('</body></html>');
-        printWindow.document.close();
-        printWindow.print();
-    });
 });
