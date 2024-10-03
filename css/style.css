@@ -36,12 +36,21 @@ label {
 }
 
 .logo {
-    width: auto; /* Ajuste o tamanho conforme necessário */
+    width: 50px; /* Ajuste do tamanho da logo */
     height: auto;
     position: absolute;
     top: 10px;
     right: 10px;
 }
+
+.powered-by {
+    position: absolute;
+    top: 65px; /* Ajustado para ficar logo abaixo da logo */
+    right: 10px;
+    font-size: 12px; /* Tamanho pequeno, mas legível */
+    color: #888;
+}
+
 
 textarea, input[type="number"] {
     width: 100%;
