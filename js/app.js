@@ -4,8 +4,8 @@ document.addEventListener("DOMContentLoaded", function() {
 
     criarTabelaBtn.addEventListener("click", criarTabela);
     imprimirTabelaBtn.addEventListener("click", function() {
-        atualizarTabelaParaExibicao(); // Prepara a tabela com os valores das provas
-        imprimirTabela(); // Imprime a tabela
+        atualizarTabelaParaImpressao(); // Atualiza a tabela com os valores de entrada
+        imprimirTabela(); // Depois imprime a tabela
     });
 
     function criarTabela() {
@@ -70,11 +70,9 @@ document.addEventListener("DOMContentLoaded", function() {
         row.querySelector('.total').textContent = total.toFixed(2);
     }
 
-    // Função para atualizar a tabela substituindo os inputs pelos valores inseridos
-    function atualizarTabelaParaExibicao() {
-        const tabelaAlunos = document.getElementById("tabelaAlunos");
-        const linhas = tabelaAlunos.querySelectorAll("tr");
-
+    // Função para atualizar a tabela substituindo os inputs pelos valores antes de imprimir
+    function atualizarTabelaParaImpressao() {
+        const linhas = document.querySelectorAll("#tabelaAlunos tr");
         linhas.forEach(linha => {
             const celulas = linha.querySelectorAll("td");
             celulas.forEach(celula => {
