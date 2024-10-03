@@ -44,6 +44,7 @@ document.addEventListener("DOMContentLoaded", function() {
         tabelaVisualizacao.style.display = 'block';
     }
 
+    // Função para atualizar o total de cada linha
     function updateTotal(row) {
         const totalCell = row.querySelector(".total");
         let total = 0;
@@ -53,10 +54,23 @@ document.addEventListener("DOMContentLoaded", function() {
         totalCell.textContent = total.toFixed(2);
     }
 
-    // Função para salvar a tabela no sessionStorage e redirecionar para a visualização
-    document.getElementById("salvarExcel").addEventListener("click", function() {
+    // Função para salvar a tabela
+    document.getElementById("salvarTabela").addEventListener("click", function() {
         const tabelaHtml = document.getElementById("tabelaAlunos").outerHTML;
-        sessionStorage.setItem('tabelaNotas', tabelaHtml); // Salva a tabela no sessionStorage
-        window.location.href = 'visualizacao.html'; // Redireciona para a página de visualização
+        localStorage.setItem('tabelaNotas', tabelaHtml); // Salva no localStorage
+        alert("Tabela salva com sucesso!");
+    });
+
+    // Função para imprimir a tabela
+    document.getElementById("imprimirTabela").addEventListener("click", function() {
+        const tabela = document.getElementById("tabelaVisualizacao").innerHTML;
+        const printWindow = window.open('', '', 'width=800,height=600');
+        printWindow.document.write('<html><head><title>Imprimir Tabela</title>');
+        printWindow.document.write('<style>table {width: 100%; border-collapse: collapse;} th, td {border: 1px solid #ccc; padding: 5px; font-size: 12px; text-align: left;}</style>');
+        printWindow.document.write('</head><body>');
+        printWindow.document.write(tabela);
+        printWindow.document.write('</body></html>');
+        printWindow.document.close();
+        printWindow.print();
     });
 });
