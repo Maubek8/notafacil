@@ -1,11 +1,9 @@
 document.addEventListener("DOMContentLoaded", function() {
     const criarTabelaBtn = document.getElementById("criarTabela");
-    const salvarTabelaBtn = document.getElementById("salvarTabela");
-    const imprimirTabelaBtn = document.getElementById("imprimirTabela");
+    const guardarImprimirBtn = document.getElementById("guardarImprimir");
 
     criarTabelaBtn.addEventListener("click", criarTabela);
-    salvarTabelaBtn.addEventListener("click", salvarTabela);
-    imprimirTabelaBtn.addEventListener("click", imprimirTabela);
+    guardarImprimirBtn.addEventListener("click", guardarEImprimir);
 
     function criarTabela() {
         const alunosInput = document.getElementById("alunosRAs");
@@ -69,15 +67,14 @@ document.addEventListener("DOMContentLoaded", function() {
         row.querySelector('.total').textContent = total.toFixed(2);
     }
 
-    // Função para salvar a tabela no localStorage
-    function salvarTabela() {
+    // Função para guardar e imprimir a tabela
+    function guardarEImprimir() {
+        // Guardar a tabela no localStorage
         const tabelaHtml = document.getElementById("tabelaAlunos").outerHTML;
         localStorage.setItem('tabelaSalva', tabelaHtml);
         alert("Tabela salva com sucesso!");
-    }
 
-    // Função para imprimir a tabela
-    function imprimirTabela() {
+        // Imprimir a tabela
         const tabela = document.getElementById("tabelaVisualizacao").innerHTML;
         const printWindow = window.open('', '', 'width=800,height=600');
         printWindow.document.write('<html><head><title>Imprimir Tabela</title>');
