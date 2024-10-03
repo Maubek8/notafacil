@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     criarTabelaBtn.addEventListener("click", criarTabela);
     imprimirTabelaBtn.addEventListener("click", function() {
-        salvarTabela();  // Salva a tabela com os dados atuais
+        atualizarTabelaParaImpressao(); // Extrai os valores dos inputs antes de imprimir
         imprimirTabela();  // Depois imprime a tabela
     });
 
@@ -70,11 +70,21 @@ document.addEventListener("DOMContentLoaded", function() {
         row.querySelector('.total').textContent = total.toFixed(2);
     }
 
-    // Função para salvar a tabela no localStorage
-    function salvarTabela() {
-        const tabelaHtml = document.getElementById("tabelaAlunos").outerHTML;
-        localStorage.setItem('tabelaSalva', tabelaHtml);
-        alert("Tabela salva com sucesso!");
+    // Função para atualizar os inputs com os valores antes de imprimir
+    function atualizarTabelaParaImpressao() {
+        const tabelaAlunos = document.getElementById("tabelaAlunos");
+        const linhas = tabelaAlunos.querySelectorAll("tr");
+
+        linhas.forEach(linha => {
+            const celulas = linha.querySelectorAll("td");
+            celulas.forEach(celula => {
+                const input = celula.querySelector("input");
+                if (input) {
+                    const valor = input.value || "0"; // Coleta o valor do input
+                    celula.textContent = valor; // Substitui o input pelo valor
+                }
+            });
+        });
     }
 
     // Função para imprimir a tabela
