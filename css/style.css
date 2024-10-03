@@ -36,19 +36,17 @@ label {
 }
 
 .logo {
-    width: 80px; /* Aumente o tamanho da logo para 80px */
+    width: 80px; /* Aumenta o tamanho da logo para 80px */
     height: auto;
-    position: absolute;
-    top: 10px;
-    right: 10px;
+    display: block;
+    margin: 0 auto; /* Centraliza a logo horizontalmente */
 }
 
 .powered-by {
-    position: absolute;
-    top: 100px; /* Reajustado para ficar logo abaixo da logo */
-    right: 10px;
+    text-align: center; /* Centraliza o texto abaixo da logo */
     font-size: 12px; /* Tamanho pequeno, mas legível */
     color: #888;
+    margin-top: 5px; /* Espaçamento entre a logo e o texto */
 }
 
 
