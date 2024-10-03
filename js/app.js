@@ -3,7 +3,10 @@ document.addEventListener("DOMContentLoaded", function() {
     const imprimirTabelaBtn = document.getElementById("imprimirTabela");
 
     criarTabelaBtn.addEventListener("click", criarTabela);
-    imprimirTabelaBtn.addEventListener("click", imprimirTabela);
+    imprimirTabelaBtn.addEventListener("click", function() {
+        atualizarTabelaParaExibicao(); // Prepara a tabela com os valores das provas
+        imprimirTabela(); // Imprime a tabela
+    });
 
     function criarTabela() {
         const alunosInput = document.getElementById("alunosRAs");
@@ -67,12 +70,29 @@ document.addEventListener("DOMContentLoaded", function() {
         row.querySelector('.total').textContent = total.toFixed(2);
     }
 
-    // Função para imprimir a tabela diretamente da página
+    // Função para atualizar a tabela substituindo os inputs pelos valores inseridos
+    function atualizarTabelaParaExibicao() {
+        const tabelaAlunos = document.getElementById("tabelaAlunos");
+        const linhas = tabelaAlunos.querySelectorAll("tr");
+
+        linhas.forEach(linha => {
+            const celulas = linha.querySelectorAll("td");
+            celulas.forEach(celula => {
+                const input = celula.querySelector("input");
+                if (input) {
+                    const valor = input.value || "0"; // Coleta o valor do input
+                    celula.textContent = valor; // Substitui o input pelo valor
+                }
+            });
+        });
+    }
+
+    // Função para imprimir a tabela
     function imprimirTabela() {
         const tabelaHtml = document.getElementById("tabelaVisualizacao").innerHTML;
         const printWindow = window.open('', '', 'width=800,height=600');
         printWindow.document.write('<html><head><title>Imprimir Tabela</title>');
-        printWindow.document.write('<style>table {width: 100%; border-collapse: collapse;} th, td {border: 1px solid #ccc; padding: 5px; font-size: 12px; text-align: left;} button {margin-top: 20px; padding: 10px;}</style>');
+        printWindow.document.write('<style>table {width: 100%; border-collapse: collapse;} th, td {border: 1px solid #ccc; padding: 5px; font-size: 12px; text-align: left;}</style>');
         printWindow.document.write('</head><body>');
         printWindow.document.write(tabelaHtml);
         printWindow.document.write('<button onclick="window.print()">Imprimir</button>');  // Botão de impressão
