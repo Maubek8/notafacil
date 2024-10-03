@@ -35,6 +35,14 @@ label {
     font-weight: bold;
 }
 
+.logo {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 50px; /* Ajuste a largura conforme necessário */
+    height: auto; /* Isso mantém a proporção da imagem */
+}
+
 textarea, input[type="number"] {
     width: 100%;
     padding: 10px;
