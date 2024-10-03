@@ -4,8 +4,8 @@ document.addEventListener("DOMContentLoaded", function() {
 
     criarTabelaBtn.addEventListener("click", criarTabela);
     imprimirTabelaBtn.addEventListener("click", function() {
-        atualizarTabelaParaImpressao(); // Extrai os valores dos inputs antes de imprimir
-        imprimirTabela();  // Depois imprime a tabela
+        atualizarTabelaParaExibicao();  // Prepara a tabela com as notas inseridas
+        exibirTabelaEmNovaJanela();     // Exibe a tabela em uma nova janela
     });
 
     function criarTabela() {
@@ -40,63 +40,4 @@ document.addEventListener("DOMContentLoaded", function() {
         cabecalho += '<th>Total</th></tr>';
         tabelaAlunos.innerHTML = cabecalho;
 
-        // Linhas da tabela
-        alunos.forEach(nome => {
-            let linhaTabela = `<tr><td>${nome}</td>`;
-            for (let i = 0; i < numProvas; i++) {
-                linhaTabela += `<td><input type="number" class="nota" min="0" max="10" value="0"></td>`;
-            }
-            linhaTabela += '<td class="total">0</td></tr>';
-            tabelaAlunos.innerHTML += linhaTabela;
-        });
-
-        tabelaVisualizacao.style.display = 'block';
-
-        // Adicionando evento para atualizar o total quando uma nota é alterada
-        document.querySelectorAll('.nota').forEach(input => {
-            input.addEventListener('input', function() {
-                const row = this.parentNode.parentNode;
-                updateTotal(row);
-            });
-        });
-    }
-
-    function updateTotal(row) {
-        const notas = row.querySelectorAll('.nota');
-        let total = 0;
-        notas.forEach(nota => {
-            total += parseFloat(nota.value) || 0;
-        });
-        row.querySelector('.total').textContent = total.toFixed(2);
-    }
-
-    // Função para atualizar os inputs com os valores antes de imprimir
-    function atualizarTabelaParaImpressao() {
-        const tabelaAlunos = document.getElementById("tabelaAlunos");
-        const linhas = tabelaAlunos.querySelectorAll("tr");
-
-        linhas.forEach(linha => {
-            const celulas = linha.querySelectorAll("td");
-            celulas.forEach(celula => {
-                const input = celula.querySelector("input");
-                if (input) {
-                    const valor = input.value || "0"; // Coleta o valor do input
-                    celula.textContent = valor; // Substitui o input pelo valor
-                }
-            });
-        });
-    }
-
-    // Função para imprimir a tabela
-    function imprimirTabela() {
-        const tabela = document.getElementById("tabelaVisualizacao").innerHTML;
-        const printWindow = window.open('', '', 'width=800,height=600');
-        printWindow.document.write('<html><head><title>Imprimir Tabela</title>');
-        printWindow.document.write('<style>table {width: 100%; border-collapse: collapse;} th, td {border: 1px solid #ccc; padding: 5px; font-size: 12px; text-align: left;}</style>');
-        printWindow.document.write('</head><body>');
-        printWindow.document.write(tabela);
-        printWindow.document.write('</body></html>');
-        printWindow.document.close();
-        printWindow.print();
-    }
-});
+        //
