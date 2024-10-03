@@ -1,63 +1,91 @@
 document.addEventListener("DOMContentLoaded", function() {
     const criarTabelaBtn = document.getElementById("criarTabela");
+    const salvarTabelaBtn = document.getElementById("salvarTabela");
+    const imprimirTabelaBtn = document.getElementById("imprimirTabela");
+
     criarTabelaBtn.addEventListener("click", criarTabela);
-});
+    salvarTabelaBtn.addEventListener("click", salvarTabela);
+    imprimirTabelaBtn.addEventListener("click", imprimirTabela);
 
-function criarTabela() {
-    const alunosInput = document.getElementById("alunosRAs");
-    const numProvasInput = document.getElementById("numProvas");
-    const tabelaVisualizacao = document.getElementById("tabelaVisualizacao");
-    const tabelaAlunos = document.getElementById("tabelaAlunos");
+    function criarTabela() {
+        const alunosInput = document.getElementById("alunosRAs");
+        const numProvasInput = document.getElementById("numProvas");
+        const tabelaVisualizacao = document.getElementById("tabelaVisualizacao");
+        const tabelaAlunos = document.getElementById("tabelaAlunos");
 
-    // Limpa a tabela anterior
-    tabelaAlunos.innerHTML = '';
+        tabelaAlunos.innerHTML = ''; // Limpa a tabela anterior
 
-    const numProvas = parseInt(numProvasInput.value, 10);
-    if (isNaN(numProvas) || numProvas < 1) {
-        alert("Insira um número válido de provas.");
-        return;
-    }
-
-    // Processa os alunos e elimina linhas vazias ou com dados incompletos
-    const alunos = alunosInput.value.split("\n").map(linha => linha.trim()).filter(linha => linha !== "");
-
-    if (alunos.length === 0) {
-        alert("Insira ao menos um aluno.");
-        return;
-    }
-
-    // Cabeçalho da tabela - Editável
-    let cabecalho = '<tr><th>Nome</th>';
-    for (let i = 0; i < numProvas; i++) {
-        cabecalho += `<th contenteditable="true">Prova ${i + 1}</th>`;
-    }
-    cabecalho += '<th>Total</th></tr>';
-    tabelaAlunos.innerHTML = cabecalho;
-
-    // Linhas da tabela
-    alunos.forEach(nome => {
-        let linhaTabela = `<tr><td>${nome}</td>`;
-        for (let i = 0; i < numProvas; i++) {
-            linhaTabela += `<td><input type="number" class="nota" min="0" max="10" value="0" oninput="updateTotal(this.parentElement.parentElement)"></td>`;
+        const numProvas = parseInt(numProvasInput.value, 10);
+        if (isNaN(numProvas) || numProvas < 1) {
+            alert("Insira um número válido de provas.");
+            return;
         }
-        linhaTabela += '<td class="total">0</td></tr>';
-        tabelaAlunos.innerHTML += linhaTabela;
-    });
 
-    tabelaVisualizacao.style.display = 'block';
-}
+        const alunos = alunosInput.value
+            .split("\n")
+            .map(linha => linha.trim())
+            .filter(linha => linha !== "" && linha !== "0"); // Filtra linhas em branco e com "0"
 
-function updateTotal(row) {
-    const totalCell = row.querySelector(".total");
-    let total = 0;
-    row.querySelectorAll(".nota").forEach(nota => {
-        total += parseFloat(nota.value) || 0;
-    });
-    totalCell.textContent = total.toFixed(2);
-}
+        if (alunos.length === 0) {
+            alert("Insira ao menos um aluno.");
+            return;
+        }
 
-// Função para salvar e redirecionar para a página de visualização
-document.getElementById("salvarExcel").addEventListener("click", function() {
-    // Simular salvamento e redirecionar para a página de visualização
-    window.location.href = 'visualizacao.html'; // Página de visualização
+        // Cabeçalho da tabela
+        let cabecalho = '<tr><th>Nome</th>';
+        for (let i = 0; i < numProvas; i++) {
+            cabecalho += `<th>Prova ${i + 1}</th>`;
+        }
+        cabecalho += '<th>Total</th></tr>';
+        tabelaAlunos.innerHTML = cabecalho;
+
+        // Linhas da tabela
+        alunos.forEach(nome => {
+            let linhaTabela = `<tr><td>${nome}</td>`;
+            for (let i = 0; i < numProvas; i++) {
+                linhaTabela += `<td><input type="number" class="nota" min="0" max="10" value="0"></td>`;
+            }
+            linhaTabela += '<td class="total">0</td></tr>';
+            tabelaAlunos.innerHTML += linhaTabela;
+        });
+
+        tabelaVisualizacao.style.display = 'block';
+
+        // Adicionando evento para atualizar o total quando uma nota é alterada
+        document.querySelectorAll('.nota').forEach(input => {
+            input.addEventListener('input', function() {
+                const row = this.parentNode.parentNode;
+                updateTotal(row);
+            });
+        });
+    }
+
+    function updateTotal(row) {
+        const notas = row.querySelectorAll('.nota');
+        let total = 0;
+        notas.forEach(nota => {
+            total += parseFloat(nota.value) || 0;
+        });
+        row.querySelector('.total').textContent = total.toFixed(2);
+    }
+
+    // Função para salvar a tabela no localStorage
+    function salvarTabela() {
+        const tabelaHtml = document.getElementById("tabelaAlunos").outerHTML;
+        localStorage.setItem('tabelaSalva', tabelaHtml);
+        alert("Tabela salva com sucesso!");
+    }
+
+    // Função para imprimir a tabela
+    function imprimirTabela() {
+        const tabela = document.getElementById("tabelaVisualizacao").innerHTML;
+        const printWindow = window.open('', '', 'width=800,height=600');
+        printWindow.document.write('<html><head><title>Imprimir Tabela</title>');
+        printWindow.document.write('<style>table {width: 100%; border-collapse: collapse;} th, td {border: 1px solid #ccc; padding: 5px; font-size: 12px; text-align: left;}</style>');
+        printWindow.document.write('</head><body>');
+        printWindow.document.write(tabela);
+        printWindow.document.write('</body></html>');
+        printWindow.document.close();
+        printWindow.print();
+    }
 });
