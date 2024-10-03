@@ -49,7 +49,7 @@ form {
 textarea, input[type="number"] {
     width: 100%;
     padding: 10px;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
     font-size: 14px;
@@ -79,14 +79,14 @@ table {
     border-collapse: collapse;
     margin-top: 20px;
     font-size: 14px;
-    table-layout: auto;
+    table-layout: fixed; /* Fixado para ajustar o layout */
 }
 
 th, td {
     border: 1px solid #ccc;
-    padding: 8px;
+    padding: 5px; /* Reduzido para diminuir o espaço */
     text-align: left;
-    line-height: normal;
+    line-height: 1.2; /* Ajustado para menos espaçamento entre linhas */
 }
 
 th {
@@ -97,4 +97,12 @@ th {
 .total {
     font-weight: bold;
     color: #2c7a7b;
+}
+
+input.nota {
+    width: 100%;
+    box-sizing: border-box; /* Certifica-se de que os inputs preencham corretamente as células */
+    padding: 5px;
+    font-size: 13px;
+    text-align: center; /* Centraliza o texto dos inputs */
 }
