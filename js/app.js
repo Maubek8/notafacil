@@ -16,7 +16,10 @@ document.addEventListener("DOMContentLoaded", function() {
             return;
         }
 
-        const alunos = alunosInput.value.split("\n").map(linha => linha.trim()).filter(linha => linha !== "");
+        const alunos = alunosInput.value
+            .split("\n")
+            .map(linha => linha.trim())
+            .filter(linha => linha !== "" && linha !== "0"); // Filtra linhas em branco e com "0"
 
         if (alunos.length === 0) {
             alert("Insira ao menos um aluno.");
@@ -60,4 +63,17 @@ document.addEventListener("DOMContentLoaded", function() {
         });
         row.querySelector('.total').textContent = total.toFixed(2);
     }
+
+    // Função para imprimir a tabela
+    document.getElementById("imprimirTabela").addEventListener("click", function() {
+        const tabela = document.getElementById("tabelaVisualizacao").innerHTML;
+        const printWindow = window.open('', '', 'width=800,height=600');
+        printWindow.document.write('<html><head><title>Imprimir Tabela</title>');
+        printWindow.document.write('<style>table {width: 100%; border-collapse: collapse;} th, td {border: 1px solid #ccc; padding: 5px; font-size: 12px; text-align: left;}</style>');
+        printWindow.document.write('</head><body>');
+        printWindow.document.write(tabela);
+        printWindow.document.write('</body></html>');
+        printWindow.document.close();
+        printWindow.print();
+    });
 });
