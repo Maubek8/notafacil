@@ -5,10 +5,11 @@ document.addEventListener("DOMContentLoaded", function() {
     function criarTabela() {
         const alunosInput = document.getElementById("alunosRAs");
         const numProvasInput = document.getElementById("numProvas");
-        const tabelaAlunos = document.getElementById("tabelaAlunos");
         const tabelaVisualizacao = document.getElementById("tabelaVisualizacao");
+        const tabelaAlunos = document.getElementById("tabelaAlunos");
 
-        tabelaAlunos.innerHTML = '';
+        tabelaAlunos.innerHTML = ''; // Limpa a tabela anterior
+
         const numProvas = parseInt(numProvasInput.value, 10);
         if (isNaN(numProvas) || numProvas < 1) {
             alert("Insira um número válido de provas.");
@@ -22,6 +23,7 @@ document.addEventListener("DOMContentLoaded", function() {
             return;
         }
 
+        // Cabeçalho da tabela
         let cabecalho = '<tr><th>Nome</th>';
         for (let i = 0; i < numProvas; i++) {
             cabecalho += `<th>Prova ${i + 1}</th>`;
@@ -29,6 +31,7 @@ document.addEventListener("DOMContentLoaded", function() {
         cabecalho += '<th>Total</th></tr>';
         tabelaAlunos.innerHTML = cabecalho;
 
+        // Linhas da tabela
         alunos.forEach(nome => {
             let linhaTabela = `<tr><td>${nome}</td>`;
             for (let i = 0; i < numProvas; i++) {
@@ -40,17 +43,21 @@ document.addEventListener("DOMContentLoaded", function() {
 
         tabelaVisualizacao.style.display = 'block';
 
+        // Adicionando evento para atualizar o total quando uma nota é alterada
         document.querySelectorAll('.nota').forEach(input => {
             input.addEventListener('input', function() {
                 const row = this.parentNode.parentNode;
-                const notas = row.querySelectorAll('.nota');
-                const totalCell = row.querySelector('.total');
-                let total = 0;
-                notas.forEach(nota => {
-                    total += parseFloat(nota.value) || 0;
-                });
-                totalCell.textContent = total.toFixed(2);
+                updateTotal(row);
             });
         });
+    }
+
+    function updateTotal(row) {
+        const notas = row.querySelectorAll('.nota');
+        let total = 0;
+        notas.forEach(nota => {
+            total += parseFloat(nota.value) || 0;
+        });
+        row.querySelector('.total').textContent = total.toFixed(2);
     }
 });
