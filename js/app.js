@@ -51,7 +51,7 @@ document.addEventListener("DOMContentLoaded", function() {
         row.querySelectorAll(".nota").forEach(nota => {
             total += parseFloat(nota.value) || 0;
         });
-        totalCell.textContent = total.toFixed(2);
+        totalCell.textContent = total.toFixed(2); // Atualiza o valor total com duas casas decimais
     }
 
     // Função para salvar a tabela
